@@ -18,20 +18,20 @@ class DataIngestionConfig:
 
 
 # create a data ingestion class
-@dataclass()
+
 class DataIngestion:
     def __init__(self):
         self.out_path = None
         self.raw_data = None
         self.home_dir = None
-        self.curr_dir = None
+        #self.curr_dir = None
         self.ingestion_config = DataIngestionConfig()
         self.main()
 
     def main(self):
         try:
-            self.curr_dir = pathlib.Path(__file__)
-            self.home_dir = self.curr_dir.parent.parent.parent
+            self.home_dir = pathlib.Path(__file__).parent.parent.parent
+            
             # e:\CampusX\projects\PW\diamond_price_pred
             self.raw_data = self.home_dir.as_posix() + '/notebooks/data/train.csv'
 
@@ -42,7 +42,7 @@ class DataIngestion:
 
             self.initiate_data_ingestion()
 
-            return self.ingestion_config.train_data_path, self.ingestion_config.test_data_path
+            return (self.ingestion_config.train_data_path, self.ingestion_config.test_data_path)
 
         except Exception as e:
             logging.info('Exception occurred at main Stage')
